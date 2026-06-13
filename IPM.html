@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IPM – Resumo da Matéria e Resolução dos Testes</title>
+<style>
+  :root {
+    --primary: #3C3489;
+    --primary-light: #EEEDFE;
+    --accent: #1D9E75;
+    --accent-light: #E1F5EE;
+    --warn: #BA7517;
+    --warn-light: #FAEEDA;
+    --danger: #A32D2D;
+    --danger-light: #FCEBEB;
+    --text: #2C2C2A;
+    --text-muted: #5F5E5A;
+    --border: rgba(0,0,0,0.12);
+    --bg: #ffffff;
+    --bg2: #F8F8F6;
+    --bg3: #F1EFE8;
+    --radius: 10px;
+    --radius-sm: 6px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 15px; line-height: 1.7; color: var(--text);
+    background: var(--bg2); max-width: 920px; margin: 0 auto; padding: 1.5rem;
+  }
+  h1 { font-size: 26px; font-weight: 700; color: var(--primary); margin-bottom: 0.25rem; }
+  h2 { font-size: 19px; font-weight: 600; color: var(--primary); margin: 2rem 0 0.75rem; border-left: 4px solid var(--primary); padding-left: 0.75rem; }
+  h3 { font-size: 15px; font-weight: 600; color: var(--text); margin: 1rem 0 0.4rem; }
+  h4 { font-size: 14px; font-weight: 600; color: var(--text-muted); margin: 0.75rem 0 0.3rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  p { margin-bottom: 0.6rem; }
+  ul, ol { padding-left: 1.4rem; margin-bottom: 0.6rem; }
+  li { margin-bottom: 0.25rem; }
+  .subtitle { color: var(--text-muted); font-size: 14px; margin-bottom: 1.5rem; }
+  .card { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius); padding: 1.1rem 1.25rem; margin-bottom: 1rem; }
+  .card-accent { border-left: 4px solid var(--primary); background: var(--primary-light); }
+  .card-green { border-left: 4px solid var(--accent); background: var(--accent-light); }
+  .card-warn { border-left: 4px solid var(--warn); background: var(--warn-light); }
+  .card-red { border-left: 4px solid var(--danger); background: var(--danger-light); }
+  .pill { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 99px; background: var(--primary-light); color: var(--primary); letter-spacing: 0.03em; margin-right: 4px; vertical-align: middle; }
+  .pill-green { background: var(--accent-light); color: #085041; }
+  .pill-warn { background: var(--warn-light); color: #633806; }
+  .pill-red { background: var(--danger-light); color: var(--danger); }
+  .nav { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 2rem; padding: 0.75rem 1rem; background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius); }
+  .nav a { font-size: 13px; font-weight: 500; color: var(--primary); text-decoration: none; padding: 4px 10px; border-radius: var(--radius-sm); background: var(--primary-light); transition: opacity 0.15s; }
+  .nav a:hover { opacity: 0.75; }
+  .section { margin-bottom: 2.5rem; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; }
+  .metric { padding: 0.75rem 1rem; background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius-sm); }
+  .metric .label { font-size: 12px; color: var(--text-muted); font-weight: 500; margin-bottom: 2px; }
+  .metric .value { font-size: 14px; color: var(--text); font-weight: 500; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  th { background: var(--bg3); text-align: left; padding: 7px 10px; font-weight: 600; font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.04em; border-bottom: 1px solid var(--border); }
+  td { padding: 7px 10px; border-bottom: 0.5px solid var(--border); vertical-align: top; }
+  tr:last-child td { border-bottom: none; }
+  .divider { height: 1px; background: var(--border); margin: 2rem 0; }
+  .teste-section { margin-bottom: 3rem; }
+  .questao { background: var(--bg); border: 0.5px solid var(--border); border-radius: var(--radius); margin-bottom: 1.25rem; overflow: hidden; }
+  .questao-header { background: var(--bg3); padding: 0.6rem 1rem; font-size: 13px; font-weight: 600; color: var(--text-muted); border-bottom: 0.5px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+  .questao-body { padding: 0.9rem 1rem; }
+  .questao-enunciado { font-size: 14px; color: var(--text); margin-bottom: 0.75rem; border-bottom: 0.5px dashed var(--border); padding-bottom: 0.75rem; }
+  .resposta-label { font-size: 12px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.4rem; }
+  .resposta { font-size: 14px; color: var(--text); }
+  .nota { font-size: 12px; color: var(--text-muted); font-style: italic; margin-top: 0.4rem; }
+  code { font-family: monospace; background: var(--bg3); padding: 1px 5px; border-radius: 3px; font-size: 13px; }
+  .tag { display: inline-block; font-size: 11px; font-weight: 600; padding: 2px 7px; border-radius: 4px; background: var(--bg3); color: var(--text-muted); margin-right: 4px; }
+  @media (max-width: 600px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<h1>Interação Pessoa-Máquina (IPM)</h1>
+<p class="subtitle">Resumo completo da matéria · Resolução dos testes 2019/20, 2022/23 e Modelo 2017/18</p>
+
+<nav class="nav">
+  <a href="#s1">1. Introdução</a>
+  <a href="#s2">2. Usabilidade</a>
+  <a href="#s3">3. Análise Utilizadores e Tarefas</a>
+  <a href="#s4">4. Modelo Concetual</a>
+  <a href="#s5">5. Prototipagem</a>
+  <a href="#s6">6. Fatores Humanos</a>
+  <a href="#s7">7. Princípios de Design</a>
+  <a href="#s8">8. Design Gráfico</a>
+  <a href="#s9">9. Avaliação</a>
+  <a href="#s10">10. Acessibilidade</a>
+  <a href="#t1">Teste 2019/20</a>
+  <a href="#t2">Teste 2022/23</a>
+  <a href="#t3">Modelo 2017/18</a>
+</nav>
+
+<!-- ==================== S1 ==================== -->
+<div class="section" id="s1">
+  <h2>1. Introdução à IPM</h2>
+  <div class="card card-accent">
+    <p><strong>IPM / HCI:</strong> "A discipline concerned with the design, evaluation and implementation of interactive computing systems for human use." Surgiu nos anos 80 com o computador pessoal.</p>
+  </div>
+  <p>IPM sobrepõe-se a: <span class="pill">UCD</span> <span class="pill">UI Design</span> <span class="pill">UX Design</span></p>
+  <h3>O que é IPM?</h3>
+  <ul>
+    <li>Conhecer o utilizador</li>
+    <li>Otimizar o desenho e a satisfação do utilizador</li>
+    <li>Avaliar a qualidade dos sistemas e interfaces</li>
+  </ul>
+  <h3>O que NÃO é IPM?</h3>
+  <ul>
+    <li>Verdades universais sobre como desenhar interfaces</li>
+    <li>Fazer coisas "bonitas" que parecem bem ao designer</li>
+    <li>Regras fixas e rígidas</li>
+  </ul>
+  <p class="nota">O sistema é para o utilizador usar — as interfaces devem atender as necessidades dos utilizadores, não as de quem as implementa.</p>
+</div>
+
+<!-- ==================== S2 ==================== -->
+<div class="section" id="s2">
+  <h2>2. Usabilidade e DCU</h2>
+  <div class="card card-accent">
+    <p><strong>ISO 9241-11:2018:</strong> Usabilidade é "the extent to which a system, product or service can be used by specified users to achieve specified goals with <em>effectiveness, efficiency and satisfaction</em> in a specified context of use."</p>
+  </div>
+  <h3>Objetivos de Usabilidade</h3>
+  <div class="grid-3">
+    <div class="metric"><div class="label">Eficácia</div><div class="value">Atingir os objetivos corretamente</div></div>
+    <div class="metric"><div class="label">Eficiência</div><div class="value">Rapidez após aprendizagem</div></div>
+    <div class="metric"><div class="label">Satisfação</div><div class="value">Agradável de utilizar</div></div>
+    <div class="metric"><div class="label">Segurança</div><div class="value">Prevenção e recuperação de erros</div></div>
+    <div class="metric"><div class="label">Utilidade</div><div class="value">O sistema faz o que precisa?</div></div>
+    <div class="metric"><div class="label">Memorização</div><div class="value">Facilidade após período sem uso</div></div>
+  </div>
+  <h3>DCU – Desenho Centrado no Utilizador</h3>
+  <p>Ciclo iterativo com 4 fases:</p>
+  <ol>
+    <li><strong>Analisar</strong> — Identificar necessidades (quem são os utilizadores? O quê? Onde?)</li>
+    <li><strong>Desenhar</strong> — Criar modelo concetual, metáforas, esboços</li>
+    <li><strong>Implementar</strong> — Criar protótipos</li>
+    <li><strong>Avaliar</strong> — Testar usabilidade, identificar problemas</li>
+  </ol>
+  <h3>Princípios de Usabilidade de Norman</h3>
+  <div class="grid-2">
+    <div class="card" style="margin:0"><strong>Visibilidade</strong> — quanto mais visível um elemento for, mais os utilizadores saberão sobre ele e como usá-lo</div>
+    <div class="card" style="margin:0"><strong>Feedback</strong> — informar o utilizador da ação realizada (ação + reação)</div>
+    <div class="card" style="margin:0"><strong>Restrições</strong> — impedir ações inválidas e introdução de dados errados</div>
+    <div class="card" style="margin:0"><strong>Mapeamento</strong> — relação entre controlos e os resultados da sua atuação</div>
+    <div class="card" style="margin:0"><strong>Affordance</strong> — qualidade do objeto para sugerir como interagir com ele</div>
+    <div class="card" style="margin:0"><strong>Coerência</strong> — operações e elementos similares para tarefas similares (interna, externa, estética e funcional)</div>
+  </div>
+  <p class="nota" style="margin-top:0.5rem">Signifier: indica <em>onde</em> a ação deve decorrer. Diferente de Affordance que indica <em>como</em> interagir.</p>
+</div>
+
+<!-- ==================== S3 ==================== -->
+<div class="section" id="s3">
+  <h2>3. Análise de Utilizadores e Tarefas (AUT)</h2>
+  <div class="card card-green">
+    <p>"A análise de utilizadores e de tarefas é o processo que estuda e observa as situações existentes atualmente de modo a saber quem vai usar a nossa interface e para fazer o quê."</p>
+  </div>
+  <h3>Objetivos da AUT</h3>
+  <ul>
+    <li>Identificar as características dos potenciais utilizadores</li>
+    <li>Caracterizar o modo como as tarefas são realizadas</li>
+    <li>Identificar o ambiente em que as tarefas são realizadas</li>
+  </ul>
+  <h3>AUT vs. Análise de Sistemas</h3>
+  <table>
+    <tr><th></th><th>AUT</th><th>Análise de Sistemas</th></tr>
+    <tr><td><strong>Foco</strong></td><td>Pessoa</td><td>Computador</td></tr>
+    <tr><td><strong>Objetivo</strong></td><td>Informação para desenhar UI e manuais</td><td>Informação para desenhar software e estrutura de dados</td></tr>
+    <tr><td><strong>Resultado</strong></td><td>Tarefas e perfil de utilizadores</td><td>Dados e funções</td></tr>
+    <tr><td><strong>Documentos</strong></td><td>Especificação da UI e guias de estilo</td><td>Especificações funcionais e arquiteturais</td></tr>
+  </table>
+
+  <h3>Tipos de Utilizador</h3>
+  <table>
+    <tr><th>Tópico</th><th>Principiantes</th><th>Principiantes Avançados</th><th>Executantes Competentes</th><th>Peritos</th></tr>
+    <tr><td><strong>Receios</strong></td><td>Medo de falhar</td><td>—</td><td>—</td><td>—</td></tr>
+    <tr><td><strong>Foco</strong></td><td>Completar o trabalho real</td><td>Completar o trabalho real</td><td>Realizar tarefas complexas</td><td>Desenvolver modelo mental</td></tr>
+    <tr><td><strong>Aprendizagem</strong></td><td>Realizar tarefas (não conceitos)</td><td>Realizar tarefas (não conceitos)</td><td>Conceitos e realizar tarefas</td><td>Conceitos e teorias além do uso normal</td></tr>
+    <tr><td><strong>Modelo mental</strong></td><td>Rudimentar ou nenhum</td><td>Básico</td><td>Consistente da interface como um todo</td><td>Abrangente e consistente</td></tr>
+    <tr><td><strong>Resolução de erros</strong></td><td>—</td><td>—</td><td>Simples</td><td>Complexos</td></tr>
+  </table>
+
+  <h3>As 11 Perguntas</h3>
+  <ol>
+    <li><strong>Quem vai utilizar o sistema?</strong> — tipo de utilizador, faixa etária, gostos, hábitos, escolaridade, deficiências físicas</li>
+    <li><strong>Que tarefas executam atualmente?</strong> — foco no sistema atual; lista com importância relativa, frequência e abrangência</li>
+    <li><strong>Que tarefas são desejáveis?</strong> — <span class="pill pill-warn">única formulada no futuro</span> — contempla o novo sistema</li>
+    <li><strong>Como se aprendem as tarefas?</strong> — consulta de manuais, perguntar, tentativa e erro; pré-requisitos</li>
+    <li><strong>Onde são desempenhadas as tarefas?</strong> — ambiente físico, social e cultural; iluminação, ruído, privacidade</li>
+    <li><strong>Qual a relação entre o utilizador e a informação?</strong> — dados pessoais vs. comuns; privados vs. públicos; presencial vs. remoto</li>
+    <li><strong>Que outros instrumentos tem o utilizador?</strong> — alternativas e soluções semelhantes; funcionalidades úteis</li>
+    <li><strong>Como comunicam os utilizadores entre si?</strong> — mecanismos (telefone, email); hierarquias e formalismos</li>
+    <li><strong>Qual a frequência de desempenho das tarefas?</strong> — utilizadores frequentes vs. ocasionais; tarefas frequentes vs. raras</li>
+    <li><strong>Quais as restrições de tempo impostas?</strong> — durações aceitáveis; impacto temporal nos erros; dependências entre tarefas</li>
+    <li><strong>Que acontece se algo correr mal?</strong> — consequências do erro; estratégias de contingência; gravidade dos erros</li>
+  </ol>
+
+  <h3>Erros Comuns na AUT</h3>
+  <ul>
+    <li>Os utilizadores foram descritos como deveriam ser, e não como realmente são</li>
+    <li>Os procedimentos da tarefa original têm problemas que foram replicados</li>
+    <li>A análise foi incompleta e não captou aspetos fundamentais</li>
+  </ul>
+
+  <h3>Seleção de Tarefas</h3>
+  <p>Transição entre a fase de análise e a fase de desenho. Base para estudar alternativas, tomar decisões de design e avaliar posteriormente. Aspetos importantes:</p>
+  <ol>
+    <li><strong>Reais e representativas</strong></li>
+    <li><strong>Orientadas ao objetivo e não ao método</strong> — descreve o "quê", não o "como". Ex: "Partilhar fotografia dos filhos com os avós" ✓ vs. "Abrir a galeria, selecionar a fotografia e carregar no botão partilhar" ✗</li>
+    <li><strong>Específicas</strong> — criar um cenário real com detalhes concretos. Ex: "Pedir um bife, sem pimenta, acompanhado com batatas fritas" ✓ vs. "Escolher o prato e a bebida" ✗</li>
+    <li><strong>Misturar complexidades</strong> — tarefas simples e complexas</li>
+    <li><strong>Identificar o utilizador</strong> — usar personas para especificar o perfil</li>
+  </ol>
+
+  <h3>Personas</h3>
+  <div class="card card-green">
+    <p>Descrições ricas de pessoas imaginárias (não reais) que representam utilizadores típicos do sistema, baseadas em padrões de comportamento e motivação de pessoas reais observadas durante a AUT. Permitem manter o foco no utilizador durante o desenvolvimento.</p>
+  </div>
+
+  <h3>Análise de Tarefas — Conceitos</h3>
+  <ul>
+    <li><strong>Objetivo</strong> — resultado final a ser alcançado (ex: realizar uma viagem)</li>
+    <li><strong>Tarefa</strong> — conjunto estruturado de atividades para atingir um objetivo</li>
+    <li><strong>Ação</strong> — operação individual ou etapa de uma tarefa</li>
+    <li><strong>Decomposição</strong> — divisão de tarefas em subtarefas ordenadas</li>
+  </ul>
+  <p>Abordagens: <strong>Formal</strong> (produto já existente, procedimentos definidos) | <strong>Informal</strong> (novo produto ou redesenho, envolvimento dos utilizadores para recolha)</p>
+  <p><strong>Resultado da AUT:</strong> conjunto de tarefas que os utilizadores realizam agora e/ou pretendam realizar no futuro, e que o sistema deve suportar.</p>
+
+  <h3>Elementos Essenciais na Recolha (HTA)</h3>
+  <div class="card">
+    <p><strong>Objetivo:</strong> Enviar uma mensagem de email com um ficheiro em anexo<br>
+    <strong>Pré-condições:</strong> Selecionar um contacto na lista de contactos<br>
+    <strong>Subtarefas:</strong> Escrever assunto · Preencher destinatário(s) · Escrever email · Anexar ficheiro · Enviar email</p>
+  </div>
+  <p>Tipos de análise formal: fluxo de trabalho · análise do trabalho · sequência de tarefas · <strong>HTA (Hierarchical Task Analysis)</strong> · análise procedimental</p>
+
+  <h3>Requisitos de Usabilidade — Medidas</h3>
+  <table>
+    <tr><th>Objetivo</th><th>Eficácia</th><th>Eficiência</th><th>Satisfação</th></tr>
+    <tr><td>Usabilidade global</td><td>% utilizadores que completaram a tarefa</td><td>Tempo para completar tarefas</td><td>Escala de satisfação</td></tr>
+    <tr><td>Facilidade de aprendizagem</td><td>% funções aprendidas</td><td>Tempo para aprender por critério</td><td>Escala de facilidade de aprendizagem</td></tr>
+    <tr><td>Tolerância a erros</td><td>% erros corrigidos com sucesso</td><td>Tempo gasto a corrigir erros</td><td>Escala para tratamento de erros</td></tr>
+    <tr><td>Uso não frequente</td><td>% tarefas concluídas após período sem uso</td><td>Tempo gasto a reaprender funções</td><td>Frequência de reutilização</td></tr>
+    <tr><td>Legibilidade</td><td>% palavras lidas corretamente</td><td>Tempo para ler N caracteres</td><td>Escala de desconforto visual</td></tr>
+  </table>
+  <p class="nota">Critérios: frases declarativas como "Os utilizadores conseguirão, em média, escolher a bebida em menos de 30 segundos."</p>
+
+  <h3>Medidas de Usabilidade (exemplos)</h3>
+  <p>Tempo para completar uma tarefa · Tempo gasto a navegar nos menus · Tempo gasto a recuperar de erros · Número de erros cometidos · Número de cliques/taps · Número de funções não utilizadas · Percentagem de conclusão · Número de vezes que recorreu à ajuda</p>
+
+  <h3>Métodos de Recolha de Informação</h3>
+  <table>
+    <tr><th>Método</th><th>Características</th></tr>
+    <tr><td><strong>Entrevista</strong></td><td>Direto e rápido; começar com questões gerais e aprofundar gradualmente; preferível fazer observações primeiro</td></tr>
+    <tr><td><strong>Observação direta</strong></td><td>Campo vs. laboratório; passiva (notas + filmagem) vs. ativa; essencial para compreender o contexto</td></tr>
+    <tr><td><strong>Observação indireta</strong></td><td>Diários e logs de interação; pouco comum</td></tr>
+    <tr><td><strong>Entrevistas de grupo</strong></td><td>Obter visões consensuais; identificar discordâncias; esclarece que "os utilizadores não são todos iguais"</td></tr>
+    <tr><td><strong>Questionários</strong></td><td>Bom alcance em pouco tempo; possibilidade de quantificar; útil para selecionar participantes</td></tr>
+    <tr><td><strong>Documentação existente</strong></td><td>Não requer tempo dos utilizadores; pode não corresponder à realidade; bom para aspetos legais</td></tr>
+    <tr><td><strong>Análise de sistemas similares</strong></td><td>Identificar funcionalidades e problemas; pode também limitar a criatividade</td></tr>
+    <tr><td><strong>Inquéritos contextuais</strong></td><td>Mistura de entrevista e observação direta ativa no local de trabalho</td></tr>
+  </table>
+</div>
+
+<!-- ==================== S4 ==================== -->
+<div class="section" id="s4">
+  <h2>4. Modelo Concetual e Modelo Mental</h2>
+  <div class="card card-accent">
+    <p><strong>Definição (Johnson & Henderson, 2002):</strong> "Um modelo concetual é uma descrição de alto nível de como um sistema está organizado e como funciona."<br>
+    <strong>Norman:</strong> "A conceptual model is an explanation, usually highly simplified, of how something works. It does not have to be complete or even accurate as long as it is useful."</p>
+  </div>
+  <h3>Objetivos do Modelo Concetual</h3>
+  <ol>
+    <li>Resolver o problema do mapeamento entre os conceitos da interface e os conceitos da atividade do utilizador</li>
+    <li>Fornecer ao utilizador uma visão de como o sistema funciona, facilitando o desenvolvimento do modelo mental</li>
+  </ol>
+  <h3>Componentes do Modelo Concetual</h3>
+  <ul>
+    <li><strong>Metáforas e analogias</strong> — ajudar o utilizador a perceber para que serve o produto e como se usa (ex: secretária, pasta, lixo, carrinho de compras, álbum de fotografias)</li>
+    <li><strong>Conceitos</strong> — objetos do domínio da tarefa, os seus atributos e as operações (ações) que suportam</li>
+    <li><strong>Relações</strong> — entre os vários conceitos do modelo (ex: "um arquivo tem fotografias")</li>
+    <li><strong>Mapeamentos</strong> — relação entre o modelo concetual e os conceitos do domínio da tarefa (ex: "uma fotografia no sistema corresponde a uma fotografia real")</li>
+  </ul>
+  <p>O modelo concetual deve ser mantido <strong>simples</strong> ("menos é mais") e <strong>focado na tarefa</strong> — quanto mais direto o mapeamento entre as operações do sistema e as do domínio da tarefa, maiores as hipóteses de ser bem percebido.</p>
+
+  <h3>Tipos de Modelos</h3>
+  <ul>
+    <li><strong>Concetual</strong> — descreve o comportamento do sistema (o quê)</li>
+    <li><strong>Físico</strong> — estrutura da interface, ou seja, a concretização do modelo concetual (o como)</li>
+  </ul>
+
+  <h3>Metáforas — 3 Passos (Erickson, 1990)</h3>
+  <ol>
+    <li><strong>Definição funcional</strong> — perceber o que o sistema pode fazer e as condições de disponibilidade (usar informação da AUT)</li>
+    <li><strong>Identificação dos problemas</strong> — perceber que funcionalidades são novas para os utilizadores e particularmente diferentes</li>
+    <li><strong>Geração de metáforas</strong> — metáforas usadas pelos utilizadores ao descrever as tarefas (AUT) e/ou focar o domínio da tarefa</li>
+  </ol>
+
+  <h3>5 Perguntas para Avaliar Metáforas (Erickson, 1990)</h3>
+  <ol>
+    <li><strong>A metáfora fornece uma estrutura?</strong> — uma boa metáfora tem estrutura familiar ao utilizador (ex: livro tem capa, índice, capítulos)</li>
+    <li><strong>Que partes são relevantes para o problema?</strong> — identificar partes que podem levar o utilizador na direção errada</li>
+    <li><strong>A metáfora é fácil de representar?</strong> — facilmente associada a elementos visuais e auditivos</li>
+    <li><strong>Os utilizadores irão perceber a metáfora?</strong> — tem de ser compreendida pelo perfil dos utilizadores</li>
+    <li><strong>A metáfora é extensível?</strong> — incorpora aspetos extra úteis no futuro?</li>
+  </ol>
+  <p class="nota">Podem existir várias metáforas no mesmo modelo concetual, mas o excesso pode originar contradições e confusão.</p>
+
+  <h3>Cenários de Atividade</h3>
+  <p>Histórias de pessoas e das suas atividades, num contexto, com um objetivo orientador e um enredo composto por ações. O MC contribui também para: léxico, cenários de atividade, interface, implementação, documentação e processo de design.</p>
+
+  <div class="card card-warn">
+    <h3 style="margin:0 0 0.4rem">Um modelo concetual NÃO É!</h3>
+    <ul style="margin:0">
+      <li>A interface com o utilizador</li>
+      <li>Sobre aspeto e funcionamento — não menciona teclas, ações do rato, cores, organização do ecrã</li>
+      <li>Uma especificação do tipo de interação</li>
+      <li>O modelo mental do utilizador</li>
+      <li>A arquitetura do sistema</li>
+    </ul>
+  </div>
+
+  <h3>Modelo Mental</h3>
+  <div class="card card-accent">
+    <p>Construído gradualmente pelos utilizadores à medida que utilizam o sistema. Baseado em familiaridade com sistemas similares, observação, experiência, treino, instruções e utilização. O objetivo é que o modelo mental coincida com o modelo concetual.</p>
+  </div>
+  <p>Os utilizadores usam o modelo mental para explicar o presente ("O que estou a ver? O que o sistema fez?") e prever/planear ("O que posso fazer a seguir? O que acontece se fizer isto?").</p>
+  <div class="grid-2">
+    <div class="metric"><div class="label">Modelos Estruturais</div><div class="value">Conhecimento da estrutura interna e funcionamento por detrás da interface (ex: sabe como funciona um carro)</div></div>
+    <div class="metric"><div class="label">Modelos Funcionais</div><div class="value">Conhecimento da lista de funções e respetivo modo de operação (ex: sabe como guiar um carro)</div></div>
+  </div>
+  <p class="nota">"If you ignore your customers' mental models… users will feel frustrated when using your product. It's as if you've put the oven in the bathroom, and the shower in the kitchen." — Dylan Mathiesen</p>
+</div>
+
+<!-- ==================== S5 ==================== -->
+<div class="section" id="s5">
+  <h2>5. Prototipagem</h2>
+  <div class="card card-green">
+    <p>"Um protótipo é uma representação concreta, mas parcial, do sistema que pretendemos desenvolver e que permite aos utilizadores interagirem com este e explorarem a sua adequação."</p>
+  </div>
+  <p>Os protótipos são úteis para discutir e avaliar ideias com as partes interessadas. Mecanismo de comunicação entre membros da equipa. Ajudam a responder a perguntas, escolher entre alternativas, testar viabilidade técnica, clarificar requisitos e fazer testes com utilizadores.</p>
+
+  <h3>Desenho Paralelo</h3>
+  <p>Gerar diversas ideias de forma rápida e económica, explorando diversas abordagens ao mesmo tempo para que a solução final beneficie de todas as ideias propostas.</p>
+
+  <h3>Dimensões do Protótipo</h3>
+  <div class="grid-2">
+    <div class="metric"><div class="label">Abrangência (Horizontal)</div><div class="value">Muitas tarefas, interface quase completa, pouca implementação. Mais rápido e mais comum.</div></div>
+    <div class="metric"><div class="label">Profundidade (Vertical)</div><div class="value">Uma tarefa, implementação quase completa das funcionalidades. Usado para testar viabilidade.</div></div>
+    <div class="metric"><div class="label">Fidelidade</div><div class="value">Semelhança visual com o produto final: BF → MF → AF (tipo de letra, cores, imagens…)</div></div>
+    <div class="metric"><div class="label">Funcionalidade</div><div class="value">Funcional (implementado com código) vs. Não Funcional (intervenção humana para funcionar)</div></div>
+  </div>
+  <div class="card card-warn" style="margin-top:0.5rem">
+    <p><strong>Atenção:</strong> Funcionalidade e fidelidade são dimensões <em>independentes</em>. Um protótipo pode ser funcional mas ter aspeto de rascunho, ou ser visualmente idêntico ao produto final mas completamente estático.</p>
+  </div>
+
+  <h3>Comparação de Fidelidade</h3>
+  <table>
+    <tr><th>Tipo</th><th>Vantagens</th><th>Desvantagens</th><th>Fase</th></tr>
+    <tr><td><strong>Baixa Fidelidade (PBF)</strong></td><td>Revisão rápida; barato; avalia vários conceitos; foco no conceito; útil para comunicação; prova de conceito</td><td>Verificação de erros limitada; fraca especificação detalhada; orientado pelo facilitador; utilidade limitada para testes formais de usabilidade; limitações de navegação e fluxo</td><td>Início — custo de alterar quase nenhum</td></tr>
+    <tr><td><strong>Alta Fidelidade (PAF)</strong></td><td>Funcionalidade completa; totalmente interativo; orientado ao utilizador; define navegação; apto para testes; aparência real; útil para marketing</td><td>Mais recursos para desenvolver; demora a modificar; ineficiente para prova de conceito; pode ser confundido com produto final; pode criar expectativas inadequadas</td><td>Final — custo de alterar baixo no look&feel, alto na sequência</td></tr>
+  </table>
+
+  <h3>Do Conceito ao Protótipo</h3>
+  <p><strong>1. Cenários de Interação</strong> — descrições de utilizadores a realizarem tarefas usando um design específico, descrevendo as ações físicas sobre os elementos da interface e as respostas. Características: minimalistas; baseados nos cenários de atividade; uma única sessão de interação; ponto de partida rápido e de baixo custo.</p>
+  <p><strong>2. Storyboards</strong> — sequência de desenhos ou imagens que representam o modo como a interface seria usada para completar uma tarefa, complementando os cenários de interação. Mostram um único caminho de interação. Os detalhes importantes são identificados; os irrelevantes suprimidos.</p>
+  <p><strong>3. Protótipos em Papel</strong></p>
+  <ul>
+    <li>Fácil e rápido de criar/alterar; não requer competências especiais</li>
+    <li>Designer: foco no que interessa; Utilizador: menos propenso a pequenos defeitos irrelevantes, mais orientado a sugestões criativas</li>
+    <li>Material: papel, tesoura, fita-cola, acetatos — feitos sobre uma moldura que simula o dispositivo</li>
+    <li>Papéis: <strong>Computador/Humano</strong> (simula a interação), <strong>Coordenador</strong> (interage e guia o utilizador), <strong>Observador</strong> (toma notas por observação passiva)</li>
+    <li>Permitem testar: metáforas e modelo concetual, adequação de funcionalidades, navegação, terminologia, completude da informação nos ecrãs</li>
+    <li>NÃO permitem identificar: interface (cores, tipos de letra, ícones), interação, tempos de resposta, retornos subtis</li>
+  </ul>
+  <p><strong>4. Wizard of Oz</strong> — protótipo baseado em software onde o comportamento da máquina é simulado por um humano. O utilizador interage com o software como se estivesse a interagir com o produto real.</p>
+  <p><strong>5. Protótipos Digitais</strong> — Figma, Adobe XD, Balsamiq, JustInMind, Miro. Permitem estrutura do projeto mais do que aparência (BF digital) ou alta fidelidade interativa (PAF digital).</p>
+
+  <h3>Diferença Storyboard vs. Protótipo</h3>
+  <ul>
+    <li>Storyboard: representação narrativa sequencial estática, um único caminho, feito por quem cria a interface para perceber o fluxo</li>
+    <li>Protótipo: representação concreta parcial e interativa, múltiplos caminhos, testável com utilizadores</li>
+  </ul>
+</div>
+
+<!-- ==================== S6 ==================== -->
+<div class="section" id="s6">
+  <h2>6. Fatores Humanos</h2>
+  <div class="card card-accent">
+    <p>"A discipline that discovers and applies information about human behavior, abilities, limitations and other characteristics to the design of tools, machines, systems, tasks, jobs, and environments for productive, safe, comfortable and effective human use." (Chapanis, 1985)</p>
+  </div>
+  <h3>Sistemas de Perceção</h3>
+  <p>Visão · Audição · Toque · Movimento</p>
+  <p><strong>Visão e daltonismo:</strong> aplicar em conjunto cores e símbolos; usar padrões e texturas para mostrar contraste; ferramentas: Sim Daltonism, ColdBlinder.</p>
+  <p><strong>Movimento — tempos de reação:</strong> Visual ≈ 200ms | Auditivo ≈ 150ms | Dor ≈ 700ms</p>
+
+  <h3>Memória</h3>
+  <ul>
+    <li><strong>Memória Sensorial</strong> | <strong>Memória de Curta Duração</strong> | <strong>Memória de Longa Duração</strong></li>
+    <li>Implicação no design: sistemas baseados no reconhecimento ("reconhecimento em vez de lembrança")</li>
+    <li>Desenhar mensagens minimamente interruptivas; usar estruturas familiares; implementar interfaces que incentivem a exploração; restringir e orientar para ações apropriadas</li>
+  </ul>
+
+  <h3>Lei de Fitts</h3>
+  <div class="card card-accent">
+    <p>Modelo do movimento humano para previsão do tempo para atingir/selecionar um alvo no ecrã.<br>
+    <code>T = a + b · log(1 + D/S)</code> — D = distância; S = tamanho<br>
+    <strong>Para minimizar T: aumentar a dimensão dos alvos (S↑) e diminuir a distância (D↓).</strong></p>
+  </div>
+  <p><strong>Aplicações práticas:</strong> menus circulares (número reduzido de opções) · menus de contexto (clique direito) · 4 cantos do ecrã · bordos do ecrã · o próprio pixel (posição atual do cursor).</p>
+  <p class="nota">Questão: "o que impacta mais positivamente a velocidade de apontar?" — Resposta correta: tanto aumentar o botão quanto movê-lo para mais perto do ponteiro (opção D).</p>
+
+  <h3>Lei de Hick</h3>
+  <div class="card card-accent">
+    <p>Modelo para previsão do tempo de escolha entre um conjunto de opções.<br>
+    <code>T = b · log(n + 1)</code> — n = número de opções<br>
+    <strong>Mais alternativas = mais tempo. Lei de Hick = (+ alternativas = + tempo).</strong></p>
+  </div>
+  <p><strong>Aplicação no design:</strong> manter opções no mínimo (conteúdo da página, navegação, imagens, listas suspensas) · categorizar escolhas · dividir processos longos em ecrãs com menos opções.</p>
+
+  <h3>Ciclo de Interação de Norman — 7 Fases e 2 Componentes</h3>
+  <div class="grid-2">
+    <div>
+      <p><strong>Componente de Execução:</strong></p>
+      <ol>
+        <li>Formar o objetivo</li>
+        <li>Formar a intenção</li>
+        <li>Especificar a ação</li>
+        <li>Executar a ação</li>
+      </ol>
+    </div>
+    <div>
+      <p><strong>Componente de Avaliação:</strong></p>
+      <ol start="5">
+        <li>Percecionar o estado do mundo</li>
+        <li>Interpretar o mundo</li>
+        <li>Avaliar o resultado</li>
+      </ol>
+    </div>
+  </div>
+  <div class="grid-2" style="margin-top:0.75rem">
+    <div class="card card-warn" style="margin:0">
+      <strong>Gulf of Execution</strong> — diferença entre as ações que o utilizador formula para atingir os seus objetivos e as ações permitidas pelo sistema. (O sistema é fácil de usar?)
+    </div>
+    <div class="card card-warn" style="margin:0">
+      <strong>Gulf of Evaluation</strong> — esforço para interpretar o estado físico do dispositivo e determinar o quanto as intenções foram bem-sucedidas. (O sistema é fácil de avaliar?)
+    </div>
+  </div>
+  <p class="nota" style="margin-top:0.5rem">"The gulf is small when the system provides information about its state in a form that is easy to get, is easy to interpret, and matches the way the person thinks of the system." (Norman, 1988)</p>
+
+  <h3>Níveis de Processamento de Norman</h3>
+  <table>
+    <tr><th>Nível</th><th>Descrição</th><th>Design</th></tr>
+    <tr><td><strong>Visceral</strong></td><td>Nível mais básico. Julgamentos rápidos e inconscientes ("mau/bom, seguro/perigoso"). Todas as pessoas têm as mesmas respostas viscerais.</td><td>Design visceral — preocupa-se com as aparências, primeiras impressões, como o produto faz o utilizador sentir</td></tr>
+    <tr><td><strong>Comportamental</strong></td><td>Sensível às expectativas da sequência de ação e às interpretações do feedback.</td><td>Design comportamental — usabilidade, prazer e eficácia do uso</td></tr>
+    <tr><td><strong>Reflexivo</strong></td><td>"Casa" da cognição consciente. Compreensão profunda, raciocínio, tomada de decisão consciente.</td><td>Design reflexivo — reflexão antes, durante e após o uso; significado do produto</td></tr>
+  </table>
+
+  <h3>Erros Humanos (Norman)</h3>
+  <p>"A divisão ocorre ao nível da intenção: se a intenção não é apropriada, é um <strong>mistake</strong>. Se a ação não foi o que se pretendia, é um <strong>slip</strong>." (Norman, 1986)</p>
+  <div class="grid-2">
+    <div class="card" style="margin:0">
+      <strong>Slips</strong> — intenção correta, ação errada (erro de execução)<br>
+      • <em>Action-based slip:</em> pôr a chávena de café no frigorífico em vez do leite<br>
+      • <em>Memory-lapse slip:</em> esquecer de selecionar o texto antes de formatar
+    </div>
+    <div class="card" style="margin:0">
+      <strong>Mistakes</strong> — a própria intenção está errada (erro ao nível da intenção)<br>
+      • <em>Rule-based:</em> diagnóstico correto mas escolha errada de ação<br>
+      • <em>Knowledge-based:</em> regular um valor na unidade errada<br>
+      • <em>Memory-lapse:</em> esquecer de ligar o wifi antes de abrir o browser
+    </div>
+  </div>
+</div>
+
+<!-- ==================== S7 ==================== -->
+<div class="section" id="s7">
+  <h2>7. Princípios de Design de Interfaces</h2>
+  <h3>8 Regras de Ouro de Shneiderman (1987)</h3>
+  <table>
+    <tr><th>R</th><th>Regra</th><th>Em detalhe</th></tr>
+    <tr><td>1</td><td>Manter a coerência</td><td>Terminologia, sequências de ações, aparência (cores, tipos de letra, organização espacial), funcionalidades</td></tr>
+    <tr><td>2</td><td>Oferecer usabilidade universal</td><td>Acesso fácil para principiantes, atalhos para utilizadores avançados, acessibilidade</td></tr>
+    <tr><td>3</td><td>Fornecer retorno informativo</td><td>Qualquer input origina output percetível; feedback em tempo útil; mensagens com detalhes úteis; em ações frequentes o feedback pode ser mais subtil</td></tr>
+    <tr><td>4</td><td>Desenhar diálogos com fecho de sequências</td><td>Ecrãs/mensagens no final dos processos ("A instalação foi concluída com sucesso")</td></tr>
+    <tr><td>5</td><td>Evitar erros</td><td>Desativar opções não permitidas; calendário em vez de texto livre; preenchimentos automáticos; apresentar escolhas possíveis</td></tr>
+    <tr><td>6</td><td>Permitir a reversão de ações</td><td>Ctrl+Z, cancelar, repor definições iniciais</td></tr>
+    <tr><td>7</td><td>Fornecer controlo e iniciativa ao utilizador</td><td>Ações desencadeadas pelos utilizadores; evitar surpresas; apresentar escolhas; permitir explorar; evitar sequências excessivamente lineares</td></tr>
+    <tr><td>8</td><td>Reduzir a carga da memória de curta duração</td><td>Evitar memorização entre ecrãs; evitar distração do objetivo; reconhecimento em vez de lembrança</td></tr>
+  </table>
+
+  <h3>10 Heurísticas de Nielsen (H2.*)</h3>
+  <table>
+    <tr><th>Heurística</th><th>Nome</th><th>Em detalhe</th></tr>
+    <tr><td>H2.1</td><td>Tornar o estado do sistema visível</td><td>Manter o utilizador informado. &lt;1s: sem retorno específico | 1–10s: indicação de espera | &gt;10s: barra de progresso e/ou estimativa</td></tr>
+    <tr><td>H2.2</td><td>Correspondência sistema–mundo real</td><td>Linguagem do utilizador; seguir convenções do mundo real; não usar jargão técnico</td></tr>
+    <tr><td>H2.3</td><td>Utilizador controla e exerce livre-arbítrio</td><td>Anular e cancelar sempre disponíveis; reposição de definições iniciais</td></tr>
+    <tr><td>H2.4</td><td>Coerência e adesão a normas</td><td>Seguir guidelines da plataforma (Apple HIG, Material Design)</td></tr>
+    <tr><td>H2.5</td><td>Evitar erros</td><td>Design preventivo &gt; mensagens de erro. Listas quando escolhas limitadas; desativar opções indisponíveis</td></tr>
+    <tr><td>H2.6</td><td>Reconhecimento em vez de lembrança</td><td>Tornar opções visíveis; menus em vez de comandos; caixas de seleção em vez de texto; imagens em vez de nomes</td></tr>
+    <tr><td>H2.7</td><td>Flexibilidade e eficiência</td><td>Personalização; aceleradores/atalhos; acesso a opções/documentos recentes; seleções múltiplas</td></tr>
+    <tr><td>H2.8</td><td>Desenho estético e minimalista</td><td>Sem informação irrelevante — cada unidade extra compete com informação relevante e diminui a sua visibilidade</td></tr>
+    <tr><td>H2.9</td><td>Ajudar a reconhecer e recuperar de erros</td><td>Mensagens precisas na linguagem do utilizador; não culpar o utilizador; indicar a causa e como corrigir</td></tr>
+    <tr><td>H2.10</td><td>Ajuda e documentação</td><td>Botão de ajuda bem visível; ajudas contextuais</td></tr>
+  </table>
+
+  <h3>Avaliação Heurística</h3>
+  <p>Avaliação <em>analítica</em> feita por peritos (não utilizadores), de forma independente. Adequada em designs iniciais e protótipos. Rápida, de baixo custo e fácil de aplicar.</p>
+  <p><strong>Fases:</strong></p>
+  <ol>
+    <li><strong>Treino pré-avaliação</strong> — briefing sobre o sistema e as tarefas</li>
+    <li><strong>Avaliação</strong> — cada avaliador faz duas inspeções independentes, criando uma lista de problemas com: designação, heurística(s) em não conformidade, descrição, correção possível e grau de severidade</li>
+    <li><strong>Consolidação</strong> — juntar os problemas identificados por todos os avaliadores</li>
+    <li><strong>Balanço</strong> — toda a equipa analisa e debate soluções; eventualmente reclassifica a severidade com base em frequência, impacto e persistência</li>
+  </ol>
+  <p><strong>Graus de severidade:</strong></p>
+  <table>
+    <tr><th>Grau</th><th>Descrição</th></tr>
+    <tr><td>0</td><td>Não é ou não existe consenso de que seja um problema de usabilidade</td></tr>
+    <tr><td>1</td><td>Problema estético apenas — baixa prioridade de correção</td></tr>
+    <tr><td>2</td><td>Problema de usabilidade menor — baixa prioridade</td></tr>
+    <tr><td>3</td><td>Problema de usabilidade maior — prioridade alta</td></tr>
+    <tr><td>4</td><td>Catástrofe de usabilidade — imperativo corrigir antes do lançamento</td></tr>
+  </table>
+</div>
+
+<!-- ==================== S8 ==================== -->
+<div class="section" id="s8">
+  <h2>8. Design Gráfico de Ecrãs</h2>
+  <p>O design visual aprimora o conteúdo e a funcionalidade — não os retira. Envolve estrategicamente imagens, cores, fontes e outros elementos.</p>
+  <h3>Princípios PARC</h3>
+  <div class="grid-2">
+    <div class="card" style="margin:0">
+      <strong>Proximidade</strong> — itens próximos são percebidos como parte do mesmo grupo. Reforça a unidade, diminui a fragmentação, auxilia a compreensão geral, permite estabelecer hierarquias. Atenção: a proximidade pode mudar em designs responsivos.
+    </div>
+    <div class="card" style="margin:0">
+      <strong>Alinhamento</strong> — vários objetos são considerados alinhados quando as suas margens ou linhas centrais se alinham. Contribui para a estética, promove organização, cria unidade, orienta os utilizadores, ajuda a entender conexões entre elementos.
+    </div>
+    <div class="card" style="margin:0">
+      <strong>Repetição</strong> — reutilizar elementos iguais ou semelhantes em todo o design (cores, formas, texturas, fontes, tamanhos). Princípio unificador por excelência; reforça a coerência; fator identificador.
+    </div>
+    <div class="card" style="margin:0">
+      <strong>Contraste</strong> — diferenças percetíveis ao longo de uma dimensão visual (tamanho, cor). Elementos que não são iguais devem ser <em>muito</em> diferentes. "Ligeiramente diferentes" confunde o utilizador.
+    </div>
+  </div>
+
+  <h3>Posicionamento</h3>
+  <ul>
+    <li><strong>Proporção áurea</strong> — razão de 1,618 entre as duas partes (a maior deve ser 1,618× a menor)</li>
+    <li><strong>Regra dos Terços</strong> — dividir o espaço em três (horizontal ou vertical); colocar os elementos importantes nas divisórias ou nas suas interseções</li>
+  </ul>
+
+  <h3>Tipografia</h3>
+  <ul>
+    <li><strong>Serifas</strong> — hastes que prolongam os extremos das letras; facilitam a leitura em papel; devem ser evitadas em ecrãs (requerem detalhe fino)</li>
+    <li><strong>Sem serifas</strong> — preferíveis em ecrãs de computador</li>
+    <li>Especificar tamanho em pontos (não pixéis); espaçamento ≈ 30% da altura do tipo</li>
+    <li>Não usar mais do que 2–3 tipos de letra</li>
+    <li>Não escrever tudo em maiúsculas (PARECE QUE ESTÁ A GRITAR); minúsculas melhoram a legibilidade</li>
+  </ul>
+
+  <h3>Escrita de Mensagens</h3>
+  <table>
+    <tr><th>Princípio</th><th>Errado</th><th>Correto</th></tr>
+    <tr><td>Linguagem do utilizador</td><td>Cabo Ethernet não detetado na entrada RJ45</td><td>Ligue o cabo de rede</td></tr>
+    <tr><td>Breve</td><td>O ficheiro online foi transferido com sucesso</td><td>Download concluído</td></tr>
+    <tr><td>Afirmativa</td><td>Pretende não transferir o ficheiro?</td><td>Quer cancelar o download?</td></tr>
+    <tr><td>Construtiva</td><td>Valor inválido</td><td>Utilize apenas algarismos</td></tr>
+    <tr><td>Utilizador com controlo</td><td>Tire a fotografia</td><td>Pronto para tirar a fotografia</td></tr>
+    <tr><td>Indicadora de ação</td><td>O pneu encontra-se vazio</td><td>Encha ou substitua o pneu</td></tr>
+    <tr><td>Voz ativa</td><td>Foi recebida uma mensagem de José Silva</td><td>José Silva enviou-lhe uma mensagem</td></tr>
+  </table>
+
+  <h3>Cor</h3>
+  <p>Escolha extremamente complexa e sujeita a preferências, modas e fatores culturais. Em PBF, evitar cor para não desviar o foco.</p>
+  <p><strong>Significados usuais:</strong> Vermelho = parar, perigo | Verde = avançar, segurança | Azul = frio | Vermelho/Laranja = quente</p>
+  <p><strong>Roda de cores:</strong> Cores complementares (radialmente opostas) · Cores adjacentes · Esquema monocromático · Esquema complementar · Esquemas análogos (uma principal + duas adjacentes) · Díade · Tríade · Tétrade · Dupla complementar</p>
+  <p>Considerar sempre daltonismo: usar cor + símbolo em conjunto; usar padrões e texturas para mostrar contraste.</p>
+</div>
+
+<!-- ==================== S9 ==================== -->
+<div class="section" id="s9">
+  <h2>9. Avaliação</h2>
+  <p>A avaliação deve ser realizada durante todo o ciclo de vida do produto.</p>
+  <h3>Tipos de Avaliação</h3>
+  <div class="grid-2">
+    <div class="card" style="margin:0"><strong>Analítica</strong> — não envolve utilizadores; realizada por peritos (avaliação pericial) ou modelos preditivos (avaliação preditiva).</div>
+    <div class="card" style="margin:0"><strong>Com Utilizadores</strong> — a mais cara e demorada, mas a mais "real". Complementa os outros tipos. Para tratamentos estatísticos válidos: 30 utilizadores (com 20 pode ser possível).</div>
+    <div class="card" style="margin:0"><strong>Formativa</strong> — durante o ciclo iterativo de desenvolvimento; identifica problemas de usabilidade.</div>
+    <div class="card" style="margin:0"><strong>Sumativa</strong> — ao produto final; mede o sucesso em comparação com os objetivos estabelecidos.</div>
+  </div>
+  <p><strong>Avaliação Pericial:</strong> o perito desempenha o papel do utilizador — formal (avaliação heurística) ou informal (com base na experiência).<br>
+  <strong>Avaliação Preditiva:</strong> análise das operações físicas e mentais para estimar o tempo necessário para tarefas.</p>
+
+  <h3>Avaliação com Utilizadores — Planeamento</h3>
+  <p><strong>Plano experimental:</strong> objetivo · local (campo ou laboratório) · data, hora e duração · equipamento · estado inicial do sistema · papéis de coordenação e observação · utilizadores e seus perfis · tarefas (quais e por que ordem) · ajuda disponível · dados a recolher · critérios de sucesso</p>
+  <p><strong>Guião experimental:</strong> introdução e objetivos · formulário de consentimento · questionário pré-teste (perfil do utilizador) · tarefas · questionário(s) pós-teste · guia de entrevista</p>
+  <p><strong>Participantes:</strong> considerações éticas (duração, conforto, privacidade) · representativos (concretizado mas diversificado) · distribuição (testes intergrupo vs. intragrupo)</p>
+
+  <h3>Métodos de Avaliação com Utilizadores</h3>
+  <ul>
+    <li><strong>Observação direta</strong> — no campo ou laboratório; passiva (notas + filmagem). Permite descobrir usos imprevistos do sistema.</li>
+    <li><strong>Observação indireta</strong> — registos de interação/logs; mostra frequência de uso de comandos</li>
+    <li><strong>Entrevistas</strong> — estruturadas ou abertas; mais úteis no início do design</li>
+    <li><strong>Questionários</strong> — bom alcance; permite quantificar; enviesamento possível (os utilizadores respondem o que acham ser a resposta esperada)</li>
+  </ul>
+
+  <h3>Questionário SUS (System Usability Scale)</h3>
+  <ul>
+    <li>Brooke (1996); um dos mais utilizados para avaliar a usabilidade percecionada</li>
+    <li>10 itens; cobre necessidade de ajuda, complexidade, funcionalidades, entre outros</li>
+    <li>Respondido após os utilizadores terminarem todas as tarefas no sistema</li>
+    <li>Pode ser dividido em dois subconjuntos: itens 4 e 10 (aprendizagem) e restantes (usabilidade)</li>
+  </ul>
+
+  <h3>Avaliação Preditiva — GOMS</h3>
+  <p>Card, Moran e Newell (1983). Modelo hierárquico para análise de tarefas:</p>
+  <ul>
+    <li><strong>Goals</strong> — objetivos da interação (podem ser divididos em sub-objetivos)</li>
+    <li><strong>Operators</strong> — ações básicas para atingir o objetivo (carregar numa tecla, mover o rato, premir um botão)</li>
+    <li><strong>Methods</strong> — sequência de operadores para atingir um objetivo (podem existir diversos métodos)</li>
+    <li><strong>Selection</strong> — regras para selecionar o método a utilizar (ex: IF Mãos-No-Teclado THEN APAGAR-COM-TECLADO ELSE APAGAR-COM-RATO)</li>
+  </ul>
+
+  <h3>Avaliação Preditiva — KLM (Keystroke Level Model)</h3>
+  <p>Complemento ao GOMS. Modelo físico para previsão do tempo necessário para realizar uma tarefa.</p>
+  <table>
+    <tr><th>Operador</th><th>Descrição</th><th>Tempo</th></tr>
+    <tr><td>K</td><td>Premir uma tecla</td><td>0.12s (bom) / 0.28s (médio) / 1.20s (mau)</td></tr>
+    <tr><td>B</td><td>Carregar nos botões do rato</td><td>0.1s (carregar/libertar) / 0.2s (clique)</td></tr>
+    <tr><td>P</td><td>Apontar (baseado na Lei de Fitts)</td><td>1.1s</td></tr>
+    <tr><td>H</td><td>Alternar entre teclado e rato</td><td>0.4s</td></tr>
+    <tr><td>M</td><td>Preparação mental</td><td>1.35s</td></tr>
+    <tr><td>D</td><td>Desenhar</td><td>Depende do contexto</td></tr>
+    <tr><td>R</td><td>Resposta do sistema</td><td>Medir</td></tr>
+  </table>
+  <div class="card card-green">
+    <p><strong>Exemplo KLM — selecionar uma frase:</strong><br>
+    H (0.4) + M (1.35) + P (1.1) + B (0.1) + M (1.35) + P (1.1) + B (0.1) = <strong>5.5s</strong></p>
+  </div>
+</div>
+
+<!-- ==================== S10 — ACESSIBILIDADE ==================== -->
+<div class="section" id="s10">
+  <h2>10. Acessibilidade</h2>
+  <div class="card card-accent">
+    <p><strong>Acessibilidade</strong> — visa garantir que <em>todas</em> as pessoas conseguem utilizar um determinado produto. Devemos desenhar e implementar com vista à acessibilidade desde o início do processo.<br><br>
+    <strong>Acessibilidade Digital</strong> — tornar tecnologias digitais acessíveis a todas as pessoas, independentemente das suas limitações.<br><br>
+    <strong>Porquê?</strong> Cerca de 15–20% da população tem algum tipo de incapacidade.</p>
+  </div>
+  <p><strong>Quando?</strong> Desde o início do processo; deve haver especialista da área na equipa.<br>
+  <strong>Áreas de aplicação:</strong> sites, aplicativos, documentos digitais, mídias sociais.</p>
+  <p><strong>Diferença entre Acessibilidade e Usabilidade:</strong> a usabilidade foca-se em utilizadores específicos com objetivos específicos; a acessibilidade visa garantir que <em>todas</em> as pessoas (incluindo com deficiências) conseguem usar o produto.</p>
+
+  <h3>Vantagens da Acessibilidade Digital</h3>
+  <ul>
+    <li><strong>Inclusão social</strong></li>
+    <li><strong>Cumprimento de leis</strong></li>
+    <li><strong>Ampliação do público-alvo</strong></li>
+  </ul>
+
+  <h3>Normas e Legislação Portuguesa</h3>
+  <ul>
+    <li>Lei nº 36/2011 — Acessibilidade dos Serviços Públicos Online</li>
+    <li>Decreto-Lei nº 83/2018</li>
+    <li>Estratégia Nacional para a Inclusão de Pessoas com Deficiência 2021–2025</li>
+    <li>RGPD e Inclusão</li>
+  </ul>
+  <p class="nota">A AMA (Agência para a Modernização Administrativa) é responsável por monitorizar a conformidade. A não conformidade pode resultar em penalizações administrativas.</p>
+
+  <h3>WCAG — Web Content Accessibility Guidelines</h3>
+  <div class="card card-green">
+    <p>ISO/IEC 40500:2012, mais conhecido como WCAG. Conjunto de standards/diretivas para tornar o conteúdo da web mais acessível — compreensível, navegável e utilizável por TODO o tipo de utilizadores.</p>
+  </div>
+  <table>
+    <tr><th>Versão</th><th>Ano</th><th>Destaque</th></tr>
+    <tr><td>WCAG 2.0</td><td>2008</td><td>Introduziu os 4 princípios POUR</td></tr>
+    <tr><td>WCAG 2.1</td><td>2018</td><td>Adicionou critérios para dispositivos móveis, leitores de ecrã e necessidades cognitivas</td></tr>
+    <tr><td>WCAG 2.2</td><td>Outubro 2023</td><td>Introduziu 9 novos critérios de sucesso e removeu um obsoleto</td></tr>
+  </table>
+
+  <h3>4 Princípios POUR da WCAG</h3>
+  <div class="grid-2">
+    <div class="metric"><div class="label">Perceptível</div><div class="value">Conteúdo acessível a diferentes sentidos (texto alt para imagens, legendas em vídeos)</div></div>
+    <div class="metric"><div class="label">Operável</div><div class="value">Navegação possível por teclado ou outros dispositivos (sem depender de rato)</div></div>
+    <div class="metric"><div class="label">Compreensível</div><div class="value">Linguagem clara e interface intuitiva (consistência, previsibilidade)</div></div>
+    <div class="metric"><div class="label">Robusto</div><div class="value">Compatível com tecnologias assistivas (leitores de ecrã, ampliadores)</div></div>
+  </div>
+  <p><strong>Níveis de Conformidade:</strong> A (mínimo) · AA (recomendado) · AAA (ideal)</p>
+
+  <h3>Barreiras à Acessibilidade Digital</h3>
+  <table>
+    <tr><th>Tipo</th><th>Exemplos</th></tr>
+    <tr><td><strong>Físicas (motoras)</strong></td><td>Dificuldade de navegação sem rato ou teclado padrão</td></tr>
+    <tr><td><strong>Visuais</strong></td><td>Falta de contraste; incompatibilidade com leitores de ecrã</td></tr>
+    <tr><td><strong>Auditivas</strong></td><td>Ausência de legendas ou transcrição em vídeos</td></tr>
+    <tr><td><strong>Cognitivas</strong></td><td>Interfaces confusas ou complexas</td></tr>
+  </table>
+
+  <h3>Tecnologias Assistivas Digitais</h3>
+  <table>
+    <tr><th>Categoria</th><th>Exemplos</th></tr>
+    <tr><td>Leitores de ecrã</td><td>JAWS, NVDA, VoiceOver (iOS), TalkBack (Android)</td></tr>
+    <tr><td>Teclados virtuais e alternativos</td><td>Gboard (Google), SwiftKey</td></tr>
+    <tr><td>Reconhecimento de voz</td><td>Google Assistant, Siri, Alexa, Dragon NaturallySpeaking</td></tr>
+    <tr><td>CAA (Comunicação Alternativa e Aumentativa)</td><td>Proloquo2Go, LetMeTalk</td></tr>
+    <tr><td>Ampliadores e lentes digitais</td><td>ZoomText, Microsoft Magnifier</td></tr>
+    <tr><td>Tradução de linguagem de sinais</td><td>HandTalk</td></tr>
+    <tr><td>Rastreamento ocular</td><td>Tobii Eye Tracker</td></tr>
+    <tr><td>Legendas automáticas e transcrições</td><td>YouTube, Otter.ai</td></tr>
+    <tr><td>Dispositivos vestíveis inteligentes</td><td>Relógios com notificações táteis, óculos inteligentes</td></tr>
+    <tr><td>Plataformas com modo de acessibilidade</td><td>WordPress Accessibility, Google Classroom</td></tr>
+  </table>
+  <p>As tecnologias assistivas promovem: <strong>autonomia</strong> · <strong>inclusão</strong> · <strong>qualidade de vida</strong>. E reduzem barreiras.</p>
+
+  <h3>Boas Práticas para Acessibilidade Digital</h3>
+  <ul>
+    <li>Adicionar texto alternativo para imagens (<code>alt</code>)</li>
+    <li>Incluir legendas e áudio-descrição em vídeos</li>
+    <li>Garantir navegação sem rato (apenas com teclado)</li>
+    <li>Cuidar do contraste e da simplicidade no design</li>
+  </ul>
+
+  <h3>Como Avaliar Acessibilidade Digital</h3>
+  <ul>
+    <li><strong>Ferramentas automáticas:</strong> Lighthouse · Wave (wave.webaim.org) · Axe</li>
+    <li><strong>Testes com utilizadores:</strong> envolver pessoas com deficiência no processo</li>
+    <li><strong>Checklist WCAG:</strong> verificar itens essenciais de acessibilidade</li>
+  </ul>
+</div>
+
+<div class="divider"></div>
+
+<!-- ==================== TESTES ==================== -->
+<h1 style="margin-top:1rem">Resolução dos Testes</h1>
+<p class="subtitle">Respostas fundamentadas com base na matéria dos slides</p>
+
+<!-- ===== TESTE 2019/20 ===== -->
+<div class="teste-section" id="t1">
+  <h2>Teste A – 2019/2020 (10 de janeiro de 2020)</h2>
+
+  <div class="questao">
+    <div class="questao-header"><span>Questão 1 <span class="pill">2.5 val.</span></span><span>Seleção de Tarefas na AUT</span></div>
+    <div class="questao-body">
+      <div class="questao-enunciado">Análise da adequação das tarefas para uma gelataria:<br>a) Pedir um gelado de 3 bolas num copo, com sabores de chocolate, morango e baunilha, sem topping.<br>b) Clicar no botão das sobremesas e selecionar um gelado com topping de chocolate.<br>c) Ver as promoções em vigor num determinado dia.</div>
+      <div class="resposta-label">Resposta</div>
+      <div class="resposta">
+        <p><strong>a) Adequada.</strong> A tarefa é específica (detalhes concretos: sabores, copo, sem topping), orientada ao objetivo (pedir o gelado, não ao método de como fazê-lo no sistema) e representa uma tarefa real de um utilizador de uma gelataria. Cumpre os aspetos essenciais de uma boa seleção de tarefas.</p>
+        <p><strong>b) Inadequada.</strong> Esta tarefa está orientada ao <em>método</em> e não ao objetivo. Descreve os passos de interação com a interface ("clicar no botão das sobremesas") em vez de descrever o objetivo do utilizador. Isso condiciona e restringe o desenho — impõe imediatamente uma solução específica. Uma alternativa adequada seria: "Pedir um gelado com topping de chocolate."</p>
+        <p><strong>c) Adequada.</strong> A tarefa é real, representativa, orientada ao objetivo e específica no contexto temporal ("num determinado dia"). Representa genuinamente uma necessidade de um utilizador de uma gelataria.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="questao">
+    <div class="questao-header"><span>Questão 2 <span class="pill">2.5 val.</span></span><span>Formas de Apresentação de Opções em Menus</span></div>
+    <div class="questao-body">
+      <div class="questao-enunciado">Indique 3 formas de apresentação de opções em menus (ordem de apresentação), referindo uma vantagem e uma desvantagem para cada uma.</div>
+      <div class="resposta-label">Resposta</div>
+      <div class="resposta">
+        <p><strong>1. Ordem Alfabética:</strong><br>Vantagem — Facilita a localização quando o utilizador já conhece o nome do item (especialmente em listas longas).<br>Desvantagem — Não agrupa itens por relação funcional, podendo separar opções relacionadas.</p>
+        <p><strong>2. Ordem por Frequência de Uso:</strong><br>Vantagem — As opções mais utilizadas ficam mais acessíveis, reduzindo o tempo de interação para utilizadores frequentes (consonante com a Lei de Hick e de Fitts).<br>Desvantagem — Pode ser confusa para utilizadores ocasionais que não encontram os itens em posições esperadas.</p>
+        <p><strong>3. Ordem por Categorias / Agrupamento Funcional:</strong><br>Vantagem — Facilita a compreensão e a descoberta de opções por tema, melhorando o modelo mental do utilizador (princípio da proximidade).<br>Desvantagem — Requer que o utilizador compreenda as categorias; se não forem intuitivas, dificulta a localização.</p>
+        <p class="nota">Outras ordens válidas: por importância/prioridade, cronológica, ordem de utilização habitual (workflow).</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="questao">
+    <div class="questao-header"><span>Questão 3 <span class="pill">2.5 val.</span></span><span>Estilo de Interação com Metáforas</span></div>
+    <div class="questao-body">
+      <div class="questao-enunciado">Dos estilos de interação estudados, um é particularmente orientado à aplicação de metáforas. Indique qual, justificando.</div>
+      <div class="resposta-label">Resposta</div>
+      <div class="resposta">
+        <p>O estilo de interação particularmente orientado à aplicação de metáforas é a <strong>Interface WIMP / GUI (Graphical User Interface)</strong>, nomeadamente através da metáfora da secretária (desktop metaphor).</p>
+        <p>A metáfora da secretária usa conceitos do mundo físico que os utilizadores já conhecem — pastas, ficheiros, lixo, área de trabalho — para representar conceitos digitais, facilitando a aprendizagem e a criação de um modelo mental adequado. Este estilo de interação é definido pela sua dependência de metáforas visuais para tornar a interface intuitiva e compreensível, sem que o utilizador precise de memorizar comandos específicos (como acontecia nos sistemas de linha de comando).</p>
+        <p class="nota">A metáfora é um dos 4 componentes fundamentais do Modelo Concetual (metáforas, conceitos, relações e mapeamentos).</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="questao">
+    <div class="questao-header"><span>Questão 4 <span class="pill">2.5 val.</span></span><span>Heurística de Nielsen e Regra de Ouro de Shneiderman relacionadas</span></div>
+    <div class="questao-body">
+      <div class="questao-enunciado">Indique uma heurística de Nielsen e uma das regras de ouro de Shneiderman que estejam fortemente relacionadas, fundamentando essa relação.</div>
+      <div class="resposta-label">Resposta</div>
+      <div class="resposta">
+        <p><strong>Heurística:</strong> H2.1 — "Tornar o estado do sistema visível" (Nielsen)<br>
+        <strong>Regra:</strong> Regra 3 — "Fornecer retorno informativo" (Shneiderman)</p>
+        <p><strong>Fundamentação:</strong> Ambos os princípios assentam na mesma premissa essencial: o sistema deve sempre comunicar ao utilizador o que está a acontecer. A heurística de Nielsen defende que o utilizador deve ser mantido informado do que se passa na aplicação com retorno adequado e em tempo útil (operações &gt;10s requerem barra de progresso). A regra de Shneiderman complementa ao afirmar que qualquer input deve originar um output percetível, com mensagens informativas e precisas. A relação é direta: a visibilidade do estado do sistema (Nielsen) concretiza-se através do retorno informativo (Shneiderman). Um exemplo concreto é a barra de progresso durante um download — cumpre ambos simultaneamente.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="questao">
+    <div class="questao-header"><span>Questão 5 <span class="pill">2.5 val.</span></span><span>Usabilidade e Estética</span></div>
+    <div class="questao-body">
+      <div class="questao-enunciado">Comente: "A usabilidade não está em nada relacionada com a criação de interfaces com aspeto visual apelativo e a estética agradável."</div>
+      <div class="resposta-label">Resposta</div>
+      <div class="resposta">
+        <p>A afirmação é <strong>parcialmente incorreta e redutora.</strong></p>
+        <p>Embora a usabilidade seja primariamente definida pela eficácia, eficiência e satisfação no cumprimento de objetivos (ISO 9241-11), a dimensão estética não é completamente alheia à usabilidade por duas razões fundamentais:</p>
+        <p>Por um lado, a H2.8 de Nielsen — "Desenho estético e minimalista" — é ela própria uma heurística de usabilidade, defendendo que interfaces sem informação irrelevante são mais usáveis. A estética ao serviço da clareza é, portanto, um princípio de usabilidade.</p>
+        <p>Por outro lado, o modelo de processamento de Norman inclui o <strong>nível visceral</strong> — a primeira impressão estética influencia a disposição do utilizador para usar o sistema e a sua perceção subjetiva de satisfação, que é um dos três pilares da usabilidade (ISO 9241-11). Uma interface visualmente desagradável pode reduzir a satisfação percecionada mesmo que seja funcionalmente eficaz.</p>
+        <p>Em conclusão, embora a usabilidade não seja sinónimo de beleza, a estética pode potenciar ou prejudicar a satisfação — um dos pilares da usabilidade — e está diretamente presente na H2.8 de Nielsen.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="questao">
+    <div class="questao-header"><span>Questão 6 <span class="pill">2.5 val.</span></span><span>Avaliação Heurística</span></div>
+    <div class="questao-body">
+      <div class="questao-enunciado">Comente: "A avaliação heurística é um processo caro. No entanto, como é muito importante, deve ser feita com a maior extensão possível e para isso deve ser feita por tantos peritos quanto seja possível."</div>
+      <div class="resposta-label">Resposta</div>
+      <div class="resposta">
+        <p>A afirmação contém erros conceptuais em ambas as suas partes.</p>
+        <p><strong>"É um processo caro":</strong> Esta afirmação é <em>incorreta</em>. A avaliação heurística é precisamente uma das abordagens mais <strong>rápidas, de baixo custo e fácil de aplicar</strong> — estas são as suas principais vantagens face à avaliação com utilizadores (esta sim, mais cara e demorada). É adequada em designs iniciais e protótipos, precisamente por ser económica.</p>
+        <p><strong>"Tantos peritos quanto seja possível":</strong> Esta afirmação é também <em>incorreta</em>. A investigação (Nielsen) mostra que <strong>3 a 5 avaliadores</strong> identificam já
